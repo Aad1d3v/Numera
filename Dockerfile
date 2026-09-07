@@ -9,6 +9,11 @@ FROM node:22-alpine AS build
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+# Fail fast with a clear message if the frontend entry point is missing from
+# the build context (the classic cause is building from an incomplete repo or
+# upload that lost the src/ directory). Without this, Vite fails later with:
+#   Rollup failed to resolve import "/src/main.tsx" from "/app/index.html"
+RUN test -f src/main.tsx || (echo 'ERROR: src/main.tsx is missing from the Docker build context. Push/upload the COMPLETE project including the src/ directory, then rebuild.' && exit 1)
 RUN npm run build
 
 # ---------- runtime ----------
