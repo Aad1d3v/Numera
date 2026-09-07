@@ -1,0 +1,13 @@
+services:
+  numera:
+    build: .
+    image: numera:latest
+    container_name: numera
+    ports:
+      - '3000:3000'
+    env_file:
+      - path: .env
+        required: false # app still runs without a key — only photo AI needs it
+    environment:
+      - PORT=3000
+    restart: unless-stopped

@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+dist-server/
+
+# Secrets — never commit
+.env
+.env.*
+*.pem
+
+# Misc
+.DS_Store
+*.log
+.freebuff/
